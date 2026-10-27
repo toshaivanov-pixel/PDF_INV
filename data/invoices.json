@@ -1,0 +1,57 @@
+[
+  {
+    "invoice_id": "CHK-2025-0101",
+    "invoice_date": "2025-03-14",
+    "due_date": "2025-03-14",
+    "customer_name": "Иванова Мария Сергеевна",
+    "customer_address": "190000, г. Санкт-Петербург, Невский пр-т, д. 88, кв. 14",
+    "customer_email": "m.ivanova@mail.ru",
+    "seller_name": "ООО «Кофейня»",
+    "seller_inn": "7801234567",
+    "payment_method": "Банковская карта (безнал)",
+    "currency": "RUB",
+    "note": "Спасибо за покупку! Фискальный чек отправлен на почту.",
+    "items": [
+      { "item_description": "Американо двойной", "quantity": 1, "unit_price": 240.0 },
+      { "item_description": "Латте на миндальном молоке, 400 мл", "quantity": 2, "unit_price": 380.0 },
+      { "item_description": "Чизкейк «Нью-Йорк»", "quantity": 1, "unit_price": 420.0 }
+    ]
+  },
+  {
+    "invoice_id": "CHK-2025-0102",
+    "invoice_date": "2025-03-15",
+    "due_date": "2025-03-25",
+    "customer_name": "Сидоров Алексей Викторович",
+    "customer_address": "123456, г. Москва, ул. Полярная, д. 10, кв. 205",
+    "customer_email": "a.sidorov@inbox.ru",
+    "seller_name": "ИП Кузнецова Е. Д.",
+    "seller_inn": "772345678901",
+    "payment_method": "Перевод по реквизитам",
+    "currency": "RUB",
+    "note": "Гарантия на работы — 12 месяцев.",
+    "items": [
+      { "item_description": "Разработка сайта-визитки (5 страниц)", "quantity": 1, "unit_price": 85000.0 },
+      { "item_description": "Написание SEO-текстов, страница", "quantity": 5, "unit_price": 2400.0 },
+      { "item_description": "Подключение аналитики и метрик", "quantity": 1, "unit_price": 9500.0 }
+    ]
+  },
+  {
+    "invoice_id": "CHK-2025-0103",
+    "invoice_date": "2025-03-20",
+    "due_date": "2025-04-03",
+    "customer_name": "Библиотека № 12, ГБУК г. Москвы",
+    "customer_address": "107014, г. Москва, ул. Стромынка, д. 8",
+    "customer_email": "director@lib12.ru",
+    "seller_name": "ООО «ТехноПрогресс»",
+    "seller_inn": "9705123456",
+    "payment_method": "Безналичный расчёт по договору № 4/25",
+    "currency": "RUB",
+    "note": "Отгрузка со склада поставщика, доставка включена в стоимость.",
+    "items": [
+      { "item_description": "Ноутбук 15.6\" i5 / 16 ГБ / 512 SSD", "quantity": 4, "unit_price": 78990.0 },
+      { "item_description": "Монитор 24\" IPS, 75 Гц", "quantity": 8, "unit_price": 13450.0 },
+      { "item_description": "Кабель HDMI 2.0, 3 м", "quantity": 12, "unit_price": 890.0 },
+      { "item_description": "Установка и настройка рабочих мест, час", "quantity": 16, "unit_price": 1800.0 }
+    ]
+  }
+]

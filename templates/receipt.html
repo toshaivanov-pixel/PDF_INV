@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Кассовый чек {{ invoice.invoice_id }}</title>
+<style>
+    @font-face {
+        font-family: 'Roboto';
+        src: url('../assets/fonts/Roboto-Regular.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    @font-face {
+        font-family: 'Roboto';
+        src: url('../assets/fonts/Roboto-Bold.ttf') format('truetype');
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    @page {
+        /* 80 mm receipt paper; the height is fixed because WeasyPrint only
+           accepts `auto` as `auto auto`. */
+        size: 80mm 200mm;
+        margin: 6mm 4mm;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Roboto', 'DejaVu Sans', Arial, sans-serif;
+        font-size: 9pt;
+        color: #1b1b1b;
+        margin: 0;
+    }
+
+    .header { text-align: center; margin-bottom: 10px; }
+    .header .seller { font-size: 11pt; font-weight: bold; margin-bottom: 2px; }
+    .header .inn  { font-size: 8pt; color: #555; }
+
+    .title {
+        text-align: center;
+        font-size: 12pt;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        letter-spacing: 1.5px;
+    }
+    .subtitle { text-align: center; font-size: 8.5pt; color: #666; margin-bottom: 8px; }
+
+    .info {
+        font-size: 8.5pt;
+        line-height: 1.45;
+        margin-bottom: 6px;
+    }
+    .info .label { color: #555; }
+
+    .divider { border-top: 1px dashed #aaa; margin: 7px 0; }
+
+    table.items {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9pt;
+    }
+    table.items th {
+        font-size: 7.5pt;
+        text-transform: uppercase;
+        color: #444;
+        border-bottom: 1px solid #999;
+        padding: 2px 0;
+    }
+    table.items td {
+        padding: 3px 0;
+        vertical-align: top;
+    }
+    .num { text-align: right; white-space: nowrap; }
+    /* Quantity column is left aligned on purpose. */
+    .qty { text-align: left; white-space: nowrap; }
+    .w-qty { width: 10%; }
+    .w-price { width: 22%; }
+    .w-sum { width: 22%; }
+
+    .total-row {
+        display: table;
+        width: 100%;
+        font-size: 11pt;
+        font-weight: bold;
+        margin-top: 4px;
+    }
+    .total-row .lbl { display: table-cell; width: 60%; }
+    .total-row .val { display: table-cell; text-align: right; }
+
+    .payment { margin-top: 6px; font-size: 8.5pt; }
+    .note {
+        margin-top: 8px;
+        font-size: 8pt;
+        color: #444;
+        text-align: center;
+        border-top: 1px dashed #aaa;
+        padding-top: 6px;
+    }
+
+    .footer {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 7pt;
+        color: #999;
+        border-top: 1px solid #ccc;
+        padding-top: 4px;
+    }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="seller">{{ invoice.seller_name or '—' }}</div>
+    <div class="inn">ИНН {{ invoice.seller_inn or '—' }}</div>
+</div>
+
+<div class="title">Кассовый чек</div>
+<div class="subtitle">{{ invoice.invoice_id }} от {{ invoice.date or '—' }}</div>
+
+<div class="info">
+    <div><span class="label">Покупатель:</span> {{ invoice.customer_name or '—' }}</div>
+    {% if invoice.customer_address %}
+    <div><span class="label">Адрес:</span> {{ invoice.customer_address }}</div>
+    {% endif %}
+    {% if invoice.customer_email %}
+    <div><span class="label">E-mail:</span> {{ invoice.customer_email }}</div>
+    {% endif %}
+    <div><span class="label">Способ оплаты:</span> {{ invoice.payment_method or '—' }}</div>
+    <div><span class="label">Валюта:</span> {{ invoice.currency }}</div>
+</div>
+
+<div class="divider"></div>
+
+<table class="items">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Наименование</th>
+        <th class="w-qty qty">Кол-во</th>
+        <th class="w-price num">Цена</th>
+        <th class="w-sum num">Сумма</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in invoice.items %}
+    <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity | num }}</td>
+        <td class="num">{{ item.unit_price | money(invoice.currency) }}</td>
+        <td class="num">{{ item.line_total | money(invoice.currency) }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="total-row">
+    <div class="lbl">ИТОГО:</div>
+    <div class="val">{{ invoice.total | money(invoice.currency) }}</div>
+</div>
+
+{% if invoice.note %}
+<div class="note">{{ invoice.note }}</div>
+{% endif %}
+
+<div class="footer">
+    Документ сформирован автоматически · «{{ source_file }}» · «{{ template_name }}»
+</div>
+
+</body>
+</html>
